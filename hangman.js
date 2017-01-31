@@ -10,31 +10,29 @@ let guessed = false;
 
 
 //prompts the user to pick an intitial word.
-const pickWord = function(){
-	return prompt('Pick a word!');
-}
-
+const pickWord = prompt('Pick a word:')
 
 const setupAnswerArray = function(){
-	return pickWord().toLowerCase().split('');
-}
-
-//console.log(pickWord());
-//console.log(setupAnswerArray());
-
-const getGuess = function(){
-	return prompt('Guess a letter or word:')
+	return pickWord.toLowerCase().split('');
 }
 
 const checkGuess = function(){
-	if(setupAnswerArray().indexOf(getGuess()) === -1 && getGuess() !== setupAnswerArray().join('')){
-		updateGameState(getGuess(),false);
+	let getGuess = prompt('Guess a letter or word:');
+
+	if(setupAnswerArray().indexOf(getGuess) === -1 && getGuess !== setupAnswerArray().join('')){
+		updateGameState(getGuess,false);
+		console.log(getGuess);
 		return window.alert('WRONG');
 	}
-	else if(getGuess() === pickWord()){
+	else if(getGuess === pickWord){
 		return showAnswerAndCongragulatePlayer();
 	}
-	return updateGameState(getGuess(),true);
+	//need to resolve the delay between correctLetters pushing and analyzing
+	else if(correctLetters.join('') === pickWord){
+		return showAnswerAndCongragulatePlayer();
+	}
+	console.log(getGuess,correctLetters,incorrectLetters);
+	return updateGameState(getGuess,true);
 }
 
 //Added sideeffects :(
@@ -42,20 +40,24 @@ const checkGuess = function(){
 	//May be able to simply invoke the showPlayerProgress function
 const updateGameState = function(letter,truthiness){
 	if(truthiness === false){
-		incorrectLetters.push(letter);
+		return incorrectLetters.push(letter);
 	}
 	else if(truthiness === true){
-		correctLetters.push(letter);
+		return correctLetters.push(letter);
 	}
-
+	console.log(correctLetters,incorrectLetters);
 	return showPlayerProgress(incorrectLetters,correctLetters);
 }
 
+//Need to check why prompts are being continually generated
+	//answer may lie in the usage of the bind method - need to investigate further
 function startGame(){
-	pickWord();
-
-	while(guessed === false){
+	//use incorrectLetters.length to keep track of the number of guesses made
+	while(guessed === false && incorrectLetters.length < 6){
 		checkGuess();
+	}
+	if(incorrectLetters.length === 6){
+		return gameOver();
 	}
 }
 
@@ -70,11 +72,14 @@ const showPlayerProgress = function(incorrectLetters,correctLetters){
 
 }
 
-
-
 const showAnswerAndCongragulatePlayer = function(){
 	guessed = true;
 	return window.alert('You Won!');
 }
+
+const gameOver = function(){
+	return window.alert('SAD!')
+}
+
 
 startGame();

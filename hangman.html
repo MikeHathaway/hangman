@@ -3,10 +3,20 @@
 <html>
   <head>
     <script src='hangman.js'></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+
 
   </head>
   <body>
     <canvas id="canvas" width="1000" height="1000" ></canvas>
+
+    <form class="form-position">
+      <button type="button" onclick="startGame()">Start Game</button>
+      <!-- pass the input values as arguments to js functions -->
+      <input type="text" placeholder="Pick a word:" id="a">
+      <input type="text" placeholder="Guess a word:" id="b">
+    </form>
+
   </body>
 
 </html>

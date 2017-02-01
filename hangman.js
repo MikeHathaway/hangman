@@ -15,6 +15,7 @@ const setupAnswerArray = function(){
 	return pickWord.toLowerCase().split('');
 }
 
+//takes guess argument
 const checkGuess = function(){
 	let getGuess = prompt('Guess a letter or word:');
 
@@ -43,6 +44,7 @@ const updateGameState = function(letter,truthiness){
 	return showPlayerProgress(incorrectLetters,correctLetters);
 }
 
+//takes pickWord
 function startGame(){
 	//use incorrectLetters.length to keep track of the number of guesses made
 	while(guessed === false && incorrectLetters.length < 6){
@@ -84,4 +86,4 @@ const clearCanvas = function(){
 }
 
 //function call that starts the game
-startGame();
+//startGame();
